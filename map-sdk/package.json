@@ -4,15 +4,20 @@
   "type": "module",
   "description": "An SDK that embed and interact with an interactive map that uses LiteAPI to fetch and display prices for hotels.",
   "scripts": {
+    "dev": "vite",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{js,json,css,md}\""
   },
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "mapbox-gl": "^3.16.0"
+  },
   "devDependencies": {
     "@eslint/js": "^9.38.0",
     "eslint": "^9.38.0",
     "globals": "^16.4.0",
-    "prettier": "3.6.2"
+    "prettier": "3.6.2",
+    "vite": "^7.1.12"
   }
 }

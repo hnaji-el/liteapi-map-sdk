@@ -1,6 +1,11 @@
 import express from "express";
+import cors from "cors";
 
 const app = express();
+
+// Enable CORS
+app.use(cors());
+
 const port = process.env.PORT || 3000;
 
 app.get("/data/places/:placeId", async (req, res) => {
