@@ -1,13 +1,9 @@
 # dependencies
-/node_modules
+/map-sdk/node_modules
+/map-server/node_modules
 
-.env
-.env.local
-.env.development
-.env.production
-.env.development.local
-.env.test.local
-.env.production.local
+/map-sdk/.env
+/map-server/.env
 
 .DS_Store
 

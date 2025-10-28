@@ -1,13 +1,19 @@
 {
-  "name": "liteapi-map-sdk",
+  "name": "map-server",
   "version": "0.1.0",
-  "description": "An SDK that embed and interact with an interactive map that uses LiteAPI to fetch and display prices for hotels.",
+  "type": "module",
+  "main": "index.js",
   "scripts": {
+    "dev": "node --watch --env-file .env src/index.js",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{js,json,css,md}\""
   },
   "author": "",
   "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
   "devDependencies": {
     "@eslint/js": "^9.38.0",
     "eslint": "^9.38.0",
