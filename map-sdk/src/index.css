@@ -1,0 +1,25 @@
+.rate {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 0.1rem 0.5rem;
+  border-radius: 20px;
+  box-shadow: 1px 2px 1rem #0003;
+  user-select: none;
+  background-color: #fff;
+  border: 1px solid #fff;
+  text-align: center;
+  display: inline-flex;
+}
+
+.corner-popup {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  display: none; /* Initially hidden */
+  max-width: 250px;
+}
