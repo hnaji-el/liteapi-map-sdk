@@ -54,7 +54,17 @@ export function setHotelDetailsPopup(map, hotel, pricePopupContainer) {
     hotelDetailsPopup.style.display = "block";
   });
 
-  pricePopupContainer.addEventListener("mouseleave", () => {
-    hotelDetailsPopup.style.display = "none";
+  pricePopupContainer.addEventListener("mouseleave", (event) => {
+    // Hide only if the mouse is not moving to the details popup
+    if (!hotelDetailsPopup.contains(event.relatedTarget)) {
+      hotelDetailsPopup.style.display = "none";
+    }
+  });
+
+  hotelDetailsPopup.addEventListener("mouseleave", (event) => {
+    // Hide only if the mouse is not moving back to the price popup
+    if (!pricePopupContainer.contains(event.relatedTarget)) {
+      hotelDetailsPopup.style.display = "none";
+    }
   });
 }
