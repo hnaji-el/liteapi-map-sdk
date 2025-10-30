@@ -3,10 +3,46 @@ import "mapbox-gl/dist/mapbox-gl.css";
 
 import "./index.css";
 
-import { getPlaceCoordinates, getHotelsRates } from "./api.js";
+import {
+  createPricePopup,
+  setHotelDetailsPopup,
+  stylePricePopup,
+} from "./popups.js";
 import { getCheckinAndCheckout } from "./utils.js";
+import { getPlaceCoordinates, getHotelsRates } from "./api.js";
 
-async function handleLoad({ placeId, map }) {
+export default async function liteAPIMapInit({
+  selector,
+  placeId,
+  mapboxToken,
+}) {
+  if (!mapboxToken) {
+    console.error(
+      "Mapbox access token is required. Please provide it in the liteAPIMapInit options.",
+    );
+    return;
+  }
+
+  const coordinates = await getPlaceCoordinates(placeId);
+
+  mapboxgl.accessToken = mapboxToken;
+  const map = new mapboxgl.Map({
+    container: selector,
+    style: "mapbox://styles/mapbox/standard",
+    center: [coordinates.longitude, coordinates.latitude], // center coordinates [lng, lat]
+    zoom: 12,
+    attributionControl: false,
+  });
+
+  // Add zoom and rotation controls to the map.
+  map.addControl(new mapboxgl.NavigationControl());
+  // Add a fullscreen control to a map.
+  map.addControl(new mapboxgl.FullscreenControl());
+
+  map.on("load", () => loadPrices(placeId, map));
+}
+
+async function loadPrices(placeId, map) {
   const { checkin, checkout } = getCheckinAndCheckout();
 
   const hotels = await getHotelsRates({
@@ -19,64 +55,19 @@ async function handleLoad({ placeId, map }) {
   });
 
   for (const hotel of hotels) {
-    const popup = new mapboxgl.Popup({
-      closeButton: false,
-      closeOnClick: false,
-      closeOnMove: false,
-    })
-      .setLngLat([hotel.longitude, hotel.latitude])
-      .setHTML(
-        `
-        <div class="rate">
-          <span>$</span>
-          <span>${Math.floor(hotel.price)}</span>
-        </div>
-        `,
-      )
-      .addTo(map);
+    const pricePopup = createPricePopup(map, hotel);
 
-    const popupContainer = popup.getElement();
-    const popupTip = popupContainer.querySelector(".mapboxgl-popup-tip");
-    const popupContent = popupContainer.querySelector(
-      ".mapboxgl-popup-content",
-    );
+    const pricePopupContainer = pricePopup.getElement();
 
-    if (popupContainer) {
-      popupContainer.style.cursor = "pointer";
-    }
-    if (popupTip) {
-      popupTip.style.display = "none";
-    }
-    if (popupContent) {
-      popupContent.style.padding = "0";
-      popupContent.style.borderRadius = "20px";
-    }
+    stylePricePopup(pricePopupContainer);
 
-    popupContainer.addEventListener("click", () => {
+    pricePopupContainer.addEventListener("click", () => {
       const url = `https://whitelabel.nuitee.link/hotels/${hotel.id}?placeId=${placeId}&checkin=${checkin}&checkout=${checkout}&adults=${2}&occupancies=${window.btoa(
         JSON.stringify([{ adults: 2 }]),
       )}`;
       window.open(url, "_blank");
     });
+
+    setHotelDetailsPopup(map, hotel, pricePopupContainer);
   }
-}
-
-export default async function liteAPIMapInit({ selector, placeId }) {
-  mapboxgl.accessToken =
-    "pk.eyJ1IjoiaG5hamktZWwiLCJhIjoiY21oN3Z1dDg4MG96dTJpczYwN2wzZGFsOSJ9.TD_bFVB2gtSRhxfYO8ppZg";
-  const coordinates = await getPlaceCoordinates(placeId);
-
-  const map = new mapboxgl.Map({
-    container: selector,
-    style: "mapbox://styles/mapbox/standard",
-    center: [coordinates.longitude, coordinates.latitude], // center coordinates [lng, lat]
-    zoom: 12,
-  });
-
-  // Add zoom and rotation controls to the map.
-  map.addControl(new mapboxgl.NavigationControl());
-  // Add a fullscreen control to a map.
-  map.addControl(new mapboxgl.FullscreenControl());
-
-  map.on("load", () => handleLoad({ placeId, map }));
 }
