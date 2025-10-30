@@ -1,15 +1,30 @@
 {
-  "name": "liteapi-map-sdk",
-  "version": "0.1.0",
+  "name": "liteapi-map-component-sdk",
+  "version": "1.0.0",
+  "description": "A client-side SDK to embed an interactive map displaying hotel prices from the LiteAPI platform.",
+  "main": "src/index.js",
   "type": "module",
-  "description": "An SDK that embed and interact with an interactive map that uses LiteAPI to fetch and display prices for hotels.",
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hnaji-el/liteapi-map-sdk"
+  },
+  "keywords": [
+    "map",
+    "sdk",
+    "hotels",
+    "liteapi"
+  ],
+  "author": "",
+  "license": "MIT",
+  "readme": "./README.md",
   "scripts": {
     "dev": "vite",
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{js,json,css,md}\""
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "mapbox-gl": "^3.16.0"
   },
