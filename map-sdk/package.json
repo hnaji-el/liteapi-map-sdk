@@ -1,6 +1,6 @@
 {
   "name": "liteapi-map-component-sdk",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A client-side SDK to embed an interactive map displaying hotel prices from the LiteAPI platform.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -22,7 +22,7 @@
   "license": "MIT",
   "readme": "./README.md",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && copyfiles -u 1 src/*.css dist",
     "dev": "vite",
     "lint": "eslint .",
     "format": "prettier --write ."
@@ -33,9 +33,9 @@
   "devDependencies": {
     "@eslint/js": "^9.38.0",
     "@types/mapbox-gl": "^3.4.1",
+    "copyfiles": "^2.4.1",
     "eslint": "^9.38.0",
     "globals": "^16.4.0",
-    "liteapi-map-component-sdk": "^1.0.0",
     "prettier": "3.6.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.2",

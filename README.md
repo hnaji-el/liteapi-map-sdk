@@ -1,5 +1,7 @@
 # LiteAPI Map SDK
 
+[![npm version](https://badge.fury.io/js/liteapi-map-component-sdk.svg)](https://badge.fury.io/js/liteapi-map-component-sdk)
+
 A client-side SDK to easily embed an interactive map displaying hotel prices from the [LiteAPI](https://liteapi.travel) platform.
 
 ## Features

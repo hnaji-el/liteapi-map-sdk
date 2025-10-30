@@ -7,6 +7,6 @@ dist/
 .DS_Store
 
 # Ignores test files
-/map-sdk/test.js
+/map-sdk/test.ts
 /map-sdk/index.html
 /map-sdk/docs.txt
