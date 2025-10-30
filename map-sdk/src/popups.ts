@@ -1,6 +1,10 @@
 import mapboxgl from "mapbox-gl";
+import { Hotel } from "./types";
 
-export function createPricePopup(map, hotel) {
+export function createPricePopup(
+  map: mapboxgl.Map,
+  hotel: Hotel,
+): mapboxgl.Popup {
   const pricePopup = new mapboxgl.Popup({
     closeButton: false,
     closeOnClick: false,
@@ -20,9 +24,11 @@ export function createPricePopup(map, hotel) {
   return pricePopup;
 }
 
-export function stylePricePopup(pricePopupContainer) {
-  const popupTip = pricePopupContainer.querySelector(".mapboxgl-popup-tip");
-  const popupContent = pricePopupContainer.querySelector(
+export function stylePricePopup(pricePopupContainer: HTMLElement): void {
+  const popupTip = pricePopupContainer.querySelector<HTMLElement>(
+    ".mapboxgl-popup-tip",
+  );
+  const popupContent = pricePopupContainer.querySelector<HTMLElement>(
     ".mapboxgl-popup-content",
   );
 
@@ -38,7 +44,11 @@ export function stylePricePopup(pricePopupContainer) {
   }
 }
 
-export function setHotelDetailsPopup(map, hotel, pricePopupContainer) {
+export function setHotelDetailsPopup(
+  map: mapboxgl.Map,
+  hotel: Hotel,
+  pricePopupContainer: HTMLElement,
+) {
   const hotelDetailsPopup = document.createElement("div");
 
   hotelDetailsPopup.className = "hotel-details-popup";
@@ -56,14 +66,14 @@ export function setHotelDetailsPopup(map, hotel, pricePopupContainer) {
 
   pricePopupContainer.addEventListener("mouseleave", (event) => {
     // Hide only if the mouse is not moving to the details popup
-    if (!hotelDetailsPopup.contains(event.relatedTarget)) {
+    if (!hotelDetailsPopup.contains(event.relatedTarget as Node | null)) {
       hotelDetailsPopup.style.display = "none";
     }
   });
 
   hotelDetailsPopup.addEventListener("mouseleave", (event) => {
     // Hide only if the mouse is not moving back to the price popup
-    if (!pricePopupContainer.contains(event.relatedTarget)) {
+    if (!pricePopupContainer.contains(event.relatedTarget as Node | null)) {
       hotelDetailsPopup.style.display = "none";
     }
   });

@@ -7,15 +7,21 @@ import {
   createPricePopup,
   setHotelDetailsPopup,
   stylePricePopup,
-} from "./popups.js";
-import { getCheckinAndCheckout } from "./utils.js";
-import { getPlaceCoordinates, getHotelsRates } from "./api.js";
+} from "./popups";
+import { getCheckinAndCheckout } from "./utils";
+import { getPlaceCoordinates, getHotelsRates } from "./api";
+
+interface LiteAPIMapInitOptions {
+  selector: string;
+  placeId: string;
+  mapboxToken: string;
+}
 
 export default async function liteAPIMapInit({
   selector,
   placeId,
   mapboxToken,
-}) {
+}: LiteAPIMapInitOptions): Promise<void> {
   if (!mapboxToken) {
     console.error(
       "Mapbox access token is required. Please provide it in the liteAPIMapInit options.",
@@ -42,7 +48,7 @@ export default async function liteAPIMapInit({
   map.on("load", () => loadPrices(placeId, map));
 }
 
-async function loadPrices(placeId, map) {
+async function loadPrices(placeId: string, map: mapboxgl.Map): Promise<void> {
   const { checkin, checkout } = getCheckinAndCheckout();
 
   const hotels = await getHotelsRates({
@@ -57,7 +63,7 @@ async function loadPrices(placeId, map) {
   for (const hotel of hotels) {
     const pricePopup = createPricePopup(map, hotel);
 
-    const pricePopupContainer = pricePopup.getElement();
+    const pricePopupContainer = pricePopup.getElement() as HTMLElement;
 
     stylePricePopup(pricePopupContainer);
 

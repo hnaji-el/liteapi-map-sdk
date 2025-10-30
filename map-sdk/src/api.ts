@@ -1,6 +1,19 @@
+import { Coordinates, Hotel } from "./types";
+
 const API_BASE_URL = "http://localhost:3000";
 
-export async function getPlaceCoordinates(placeId) {
+interface GetHotelsRatesParams {
+  placeId: string;
+  checkin: string;
+  checkout: string;
+  currency: string;
+  guestNationality: string;
+  adults: number;
+}
+
+export async function getPlaceCoordinates(
+  placeId: string,
+): Promise<Coordinates> {
   let coordinates = {
     longitude: -3.7147230999999996,
     latitude: 40.429857399999996,
@@ -29,8 +42,8 @@ export async function getHotelsRates({
   currency,
   guestNationality,
   adults,
-}) {
-  let hotels = [];
+}: GetHotelsRatesParams): Promise<Hotel[]> {
+  let hotels: Hotel[] = [];
 
   try {
     const res = await fetch(
